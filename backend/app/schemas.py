@@ -1,4 +1,5 @@
-from pydantic import BaseModel, EmailStr, Field, model_validator
+from typing import Annotated
+from pydantic import BaseModel, EmailStr, Field, StringConstraints, model_validator
 
 FULL_PRICE = 2000
 CHILD_PRICE = 1000
@@ -11,7 +12,7 @@ def price_for(age: int) -> int:
 
 
 class ParticipantIn(BaseModel):
-    name: str = Field(min_length=1, max_length=200)
+    name: Annotated[str, StringConstraints(strip_whitespace=True, min_length=1, max_length=200)]
     age: int = Field(ge=0, le=120)
 
 
